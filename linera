@@ -1,0 +1,32 @@
+Remove unused dependencies and restrict use of alloy. (#3907)
+## Motivation
+
+Machete is imprecise for finding unused dependencies. With the help of a
+simple script more unused dependencies were found.
+Also, the use of `alloy::primitives` poses some problems and was
+eliminated when possible.
+
+## Proposal
+
+A specific program was designed for this search.
+
+It is not particularly clever, but we had several missed stuff that
+machete could not find and `cargo +nightly udeps` could not find as
+well.
+
+For the basic types, we want to avoid the use of `alloy::primitives` as
+it a library with dependency on `c-kzg`. So, instead it was replaced by
+`alloy_primitives` and `revm_primitives`.
+
+## Test Plan
+
+The CI.
+
+## Release Plan
+
+- Nothing to do / These changes follow the usual release cycle.
+
+## Links
+
+The program being used is available at
+[cargo_package_management](https://github.com/MathieuDutSik/cargo_package_management).
